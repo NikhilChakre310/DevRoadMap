@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 
 export const NAV = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/learn", label: "Learn Workspace", icon: BookOpen },
   { to: "/roadmap", label: "My Roadmap", icon: Map },
   { to: "/daily", label: "Daily Tracker", icon: CalendarCheck },
   { to: "/dsa", label: "DSA / LeetCode", icon: Code2 },
@@ -47,7 +48,14 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const t = localStorage.getItem("theme");
+    let t: string | null = null;
+    try {
+      if (typeof window !== "undefined" && window.localStorage) {
+        t = window.localStorage.getItem("theme");
+      }
+    } catch {
+      // Ignore storage access error
+    }
     document.documentElement.classList.toggle("light", t === "light");
     const { data } = supabase.auth.onAuthStateChange((_e, s) => {
       qc.setQueryData(["session"], s);

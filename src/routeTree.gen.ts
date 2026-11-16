@@ -14,6 +14,7 @@ import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as DailyRouteImport } from './routes/daily'
 import { Route as DsaRouteImport } from './routes/dsa'
 import { Route as GithubRouteImport } from './routes/github'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ProjectsRouteImport } from './routes/projects'
@@ -45,6 +46,11 @@ const DsaRoute = DsaRouteImport.update({
 const GithubRoute = GithubRouteImport.update({
   id: '/github',
   path: '/github',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/daily': typeof DailyRoute
   '/dsa': typeof DsaRoute
   '/github': typeof GithubRoute
+  '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/daily': typeof DailyRoute
   '/dsa': typeof DsaRoute
   '/github': typeof GithubRoute
+  '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/daily': typeof DailyRoute
   '/dsa': typeof DsaRoute
   '/github': typeof GithubRoute
+  '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/projects': typeof ProjectsRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/daily'
     | '/dsa'
     | '/github'
+    | '/learn'
     | '/login'
     | '/profile'
     | '/projects'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/daily'
     | '/dsa'
     | '/github'
+    | '/learn'
     | '/login'
     | '/profile'
     | '/projects'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/daily'
     | '/dsa'
     | '/github'
+    | '/learn'
     | '/login'
     | '/profile'
     | '/projects'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   DailyRoute: typeof DailyRoute
   DsaRoute: typeof DsaRoute
   GithubRoute: typeof GithubRoute
+  LearnRoute: typeof LearnRoute
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/github'
       fullPath: '/github'
       preLoaderRoute: typeof GithubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   DailyRoute: DailyRoute,
   DsaRoute: DsaRoute,
   GithubRoute: GithubRoute,
+  LearnRoute: LearnRoute,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
   ProjectsRoute: ProjectsRoute,

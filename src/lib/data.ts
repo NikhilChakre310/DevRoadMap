@@ -51,6 +51,8 @@ export function useSettings() {
       preferred_language: s?.preferred_language ?? "Python",
       leetcode_daily_target: s?.leetcode_daily_target ?? 2,
       leetcode_weekly_target: s?.leetcode_weekly_target ?? 10,
+      active_month: s?.active_month ?? 1,
+      active_topic_id: s?.active_topic_id ?? "m1-t1-s1",
     },
   };
 }

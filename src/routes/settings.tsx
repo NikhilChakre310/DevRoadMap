@@ -186,7 +186,13 @@ function SettingsPage() {
           onCheckedChange={(v) => {
             setLight(v);
             document.documentElement.classList.toggle("light", v);
-            localStorage.setItem("theme", v ? "light" : "dark");
+            try {
+              if (typeof window !== "undefined" && window.localStorage) {
+                window.localStorage.setItem("theme", v ? "light" : "dark");
+              }
+            } catch {
+              // Ignore storage errors
+            }
           }}
         />
       </div>

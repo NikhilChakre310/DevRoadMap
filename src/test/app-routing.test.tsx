@@ -11,6 +11,7 @@ describe("App routing", () => {
     "/",
     "/profile",
     "/roadmap",
+    "/learn",
     "/daily",
     "/dsa",
     "/projects",

@@ -61,7 +61,7 @@ function ProfilePage() {
     setSaving(true);
 
     // Basic validation
-    if (form.age !== null && form.age !== undefined && form.age !== ("" as any)) {
+    if (form.age !== null && form.age !== undefined && String(form.age) !== "") {
       const ageNum = Number(form.age);
       if (isNaN(ageNum) || ageNum < 10 || ageNum > 120) {
         setSaving(false);
@@ -141,9 +141,7 @@ function ProfilePage() {
             </div>
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="font-display text-2xl font-bold">
-                  {form.full_name || "Developer"}
-                </h2>
+                <h2 className="font-display text-2xl font-bold">{form.full_name || "Developer"}</h2>
                 {form.age && (
                   <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs text-muted-foreground">
                     {form.age} yrs
@@ -242,7 +240,9 @@ function ProfilePage() {
           <div className="flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-emerald-500" />
             <span className="text-xs text-muted-foreground">Topics:</span>
-            <span className="text-xs font-semibold">{stats.completed} / {stats.topicsTotal}</span>
+            <span className="text-xs font-semibold">
+              {stats.completed} / {stats.topicsTotal}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <Trophy className="h-4 w-4 text-amber-500" />
@@ -297,7 +297,7 @@ function ProfilePage() {
                 max={120}
                 placeholder="e.g. 23"
                 value={form.age ?? ""}
-                onChange={(e) => setField("age", e.target.value ? Number(e.target.value) : (null as any))}
+                onChange={(e) => setField("age", e.target.value ? Number(e.target.value) : null)}
               />
             </div>
 
@@ -409,7 +409,9 @@ function ProfilePage() {
         <div className="rounded-xl border bg-card p-6 shadow-sm space-y-4">
           <div className="flex items-center gap-2 border-b pb-3">
             <Globe className="h-5 w-5 text-primary" />
-            <h3 className="font-display font-semibold text-base">Coding Profiles & Social Handles</h3>
+            <h3 className="font-display font-semibold text-base">
+              Coding Profiles & Social Handles
+            </h3>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">

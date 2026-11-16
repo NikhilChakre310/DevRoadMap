@@ -80,6 +80,7 @@ function createSupabaseClient() {
   });
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function createLocalSupabaseClient(): any {
   const memoryStore: Record<string, string> = {};
   const getItem = (k: string) => {
@@ -87,7 +88,9 @@ function createLocalSupabaseClient(): any {
       if (typeof window !== "undefined" && window.localStorage) {
         return window.localStorage.getItem(k);
       }
-    } catch {}
+    } catch {
+      // Ignore storage access errors
+    }
     return memoryStore[k] ?? null;
   };
   const setItem = (k: string, v: string) => {
@@ -96,7 +99,9 @@ function createLocalSupabaseClient(): any {
         window.localStorage.setItem(k, v);
         return;
       }
-    } catch {}
+    } catch {
+      // Ignore storage access errors
+    }
     memoryStore[k] = v;
   };
 
@@ -123,6 +128,8 @@ function createLocalSupabaseClient(): any {
         const initial = [
           {
             user_id: defaultUser.id,
+            active_month: 1,
+            active_topic_id: "m1-t1-s1",
             full_name: "Developer",
             age: null,
             college: "",
@@ -146,6 +153,22 @@ function createLocalSupabaseClient(): any {
             preferred_language: "Python",
             leetcode_daily_target: 2,
             leetcode_weekly_target: 10,
+            updated_at: new Date().toISOString(),
+          },
+        ];
+        saveTableData(table, initial);
+        return initial;
+      }
+      if (table === "month_completions") {
+        const initial = [
+          {
+            id: "mc-1",
+            user_id: defaultUser.id,
+            month_id: 1,
+            status: "Unlocked",
+            confirmed_complete: false,
+            completed_at: null,
+            unlocked_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
           },
         ];
@@ -230,7 +253,11 @@ function createLocalSupabaseClient(): any {
           const items = Array.isArray(rows) ? rows : [rows];
           const curr = getTableData(table);
           const formatted = items.map((row) => ({
-            id: row.id || (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random()}`),
+            id:
+              row.id ||
+              (typeof crypto !== "undefined" && crypto.randomUUID
+                ? crypto.randomUUID()
+                : `id-${Math.random()}`),
             user_id: row.user_id || defaultUser.id,
             created_at: row.created_at || new Date().toISOString(),
             updated_at: new Date().toISOString(),
@@ -242,7 +269,7 @@ function createLocalSupabaseClient(): any {
         },
         upsert: async (rows: any | any[]) => {
           const items = Array.isArray(rows) ? rows : [rows];
-          let curr = getTableData(table);
+          const curr = getTableData(table);
           for (const item of items) {
             const rowWithUser = {
               user_id: defaultUser.id,
@@ -254,10 +281,19 @@ function createLocalSupabaseClient(): any {
               if (item.id && c.id === item.id) return true;
               if (table === "user_settings" && c.user_id === rowWithUser.user_id) return true;
               if (table === "topic_progress" && c.topic_id === item.topic_id) return true;
-              if (table === "topic_submissions" && c.topic_id === item.topic_id && c.slot === item.slot) return true;
-              if (table === "milestone_progress" && c.milestone_id === item.milestone_id) return true;
+              if (
+                table === "topic_submissions" &&
+                c.topic_id === item.topic_id &&
+                c.slot === item.slot
+              )
+                return true;
+              if (table === "milestone_progress" && c.milestone_id === item.milestone_id)
+                return true;
               if (table === "criterion_checks" && c.criterion_id === item.criterion_id) return true;
               if (table === "resource_status" && c.resource_id === item.resource_id) return true;
+              if (table === "month_completions" && c.month_id === item.month_id) return true;
+              if (table === "topic_assessments" && c.topic_id === item.topic_id) return true;
+              if (table === "topic_assignments" && c.topic_id === item.topic_id) return true;
               if (table === "weekly_reviews" && c.week_start === item.week_start) return true;
               if (table === "github_repos" && c.full_name === item.full_name) return true;
               return false;
@@ -266,7 +302,10 @@ function createLocalSupabaseClient(): any {
               curr[idx] = { ...curr[idx], ...rowWithUser };
             } else {
               if (!rowWithUser.id) {
-                rowWithUser.id = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random()}`;
+                rowWithUser.id =
+                  typeof crypto !== "undefined" && crypto.randomUUID
+                    ? crypto.randomUUID()
+                    : `id-${Math.random()}`;
               }
               curr.push(rowWithUser);
             }

@@ -9,7 +9,7 @@ DevRoadmap is a developer learning operating system and growth platform designed
 ## Features
 
 - **Structured 8-Month Curriculum**: Python, CS basics, OOP & design patterns, DSA, FastAPI backend, React/Next.js frontend, System Design, and AI Engineering (LLMs, RAG, agents).
-- **Three Project Slots Rule**: Exactly 3 independent project submission slots (*Practice*, *Intermediate*, *Portfolio*) for every topic and subtopic with repository, live demo, and tech stack tracking.
+- **Three Project Slots Rule**: Exactly 3 independent project submission slots (_Practice_, _Intermediate_, _Portfolio_) for every topic and subtopic with repository, live demo, and tech stack tracking.
 - **Developer Profile**: Complete profile with education, career goals, GitHub, LeetCode, LinkedIn, and personal portfolio handles.
 - **Daily Tracker & Study Timer**: Real-time study session timer with categorized activity logging.
 - **DSA / LeetCode Tracker**: Problem log with difficulty ratings, topic tags, time spent, complexity notes, mistake tracking, and revision queue.
@@ -49,7 +49,7 @@ VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
 
-*(If environment variables are omitted, DevRoadmap automatically operates in standalone local storage mode for testing).*
+_(If environment variables are omitted, DevRoadmap automatically operates in standalone local storage mode for testing)._
 
 ### 3. Run Locally
 

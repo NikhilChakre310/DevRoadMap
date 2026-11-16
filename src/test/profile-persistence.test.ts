@@ -30,7 +30,7 @@ describe("Profile validation & persistence structure", () => {
   });
 
   it("formats user_settings payload safely without overwriting with empty strings", () => {
-    const sanitizeProfile = (raw: Record<string, any>) => ({
+    const sanitizeProfile = (raw: Record<string, unknown>) => ({
       full_name: raw.full_name?.trim() || null,
       age: raw.age ? Number(raw.age) : null,
       college: raw.college?.trim() || null,
